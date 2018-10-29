@@ -16,11 +16,8 @@ int main(int argc, const char * argv[]) {
     
     for(i = 0; i < 55; i++){
         if(c[i] <= 'z' && c[i] >= 'a'){
-            c[i] = c[i] + n;
-            if(c[i] > 'z')  c[i] -= 26;
+            c[i] = ((c[i]-'a'+n) % 26) + 'a';
         }
-        
-        
     }
     
     printf("%s\n",c);
