@@ -10,14 +10,17 @@
 #include <math.h>
 int main()
 {
-    void printf_sushu(int x,int y);
-    int a,b;
+    int printf_sushu(int x,int y,int count);
+    int a,b,n = 0;
+    
     scanf("%d%d",&a,&b);
-    printf_sushu(a,b);
+    n = printf_sushu(a,b,n);
+    printf("\n%d\n",n);
     return 0;
+    
 }
 
-void printf_sushu(int x,int y)
+int printf_sushu(int x,int y,int count)     //输出x到y之间所有的素数
 {
     int sushu(int z);
     while (x<=y)
@@ -25,12 +28,14 @@ void printf_sushu(int x,int y)
         if(sushu(x)==1)
         {
             printf("%8.0d",x);
+            count++;
         }
         x=x+1;
     }
+    return count;
 }
 
-int sushu(int z)
+int sushu(int z)    //判定
 {
     
     
