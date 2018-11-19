@@ -7,9 +7,11 @@
 //
 
 #include <stdio.h>
+#include <string.h>
 
 int changshu = 0,xishu = 0,ph = 1;
 void chuli(char *s);
+int num(char *s);
 int main(int argc, const char * argv[]) {
     
     char r[100] = {0};
@@ -47,6 +49,7 @@ int main(int argc, const char * argv[]) {
         s[k] = r[j];
     }
     chuli(s);
+    printf("%d %d\n",changshu,xishu);
     printf("%f",(float)changshu/xishu);
     return 0;
 
@@ -54,43 +57,34 @@ int main(int argc, const char * argv[]) {
 
 
 void chuli(char *s){
-    int m = 0,n = 0,x = 0;
-    for( ; s[m] != '\0'; m++);
-    m--;                        //m为最后一位
-    if(m < 0) return;
-    printf("%d\n",m);
-    
-    if(s[m]>='a' && s[m]<='z'){     //是未知数
-        printf("d");
-        if(m == 0)  xishu += ph;        //a
-        if(s[0] == '-'){          //第一位为负
-            if(m == 1){                 //-a
-                xishu -= ph;
-            }
-            else{                       //-6a
-                for(n = 1; n < m; n++){
-                    x = x*10 - (s[n]-'0')*ph;
-                    xishu += x;
-                }
-            }
+    int f = 1;
+    int x = 0;
+    if(s[0] < 45){
+        f = (s[0] - 44) * (-1);
+        int  j;
+        for(j = 0; j < 50; j++){
+            s[j] = s[j+1];
         }
-        if(s[0] == '+'){
-            if(m == 1){                 //+a
-                xishu -= ph;
-            }
-
-            for(n = 1; n < m; n++){
-                x = x*10 + (s[n]-'0')*ph;
-                xishu += x;
-            }
-
-        }
-        else{                           //6a
-            for(n = 1; n < m; n++){
-                x = x*10 + (s[n]-'0')*ph;
-                xishu += x;
-            }
-        }
+        
     }
+    
+    if(s[strlen(s)-1] > 64){
+        x = 1;
+        s[strlen(s)-1] = '\0';
+    }
+    
+    if(x == 1)  xishu += ph*f*num(s);
+    if(x == 0)  changshu += ph*f*num(s);
+    
+    
 }
 
+
+int num(char *s){
+    int i,sum = 0;
+    for(i = 0; i < strlen(s); i++){
+        sum *= 10;
+        sum += s[i] - 48;
+    }
+    return sum;
+}
